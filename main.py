@@ -42,7 +42,14 @@ def codeapi(File, Repositories="CodeAPI"):
         return "None"
 
 class LanguageFileNotCompletely(Exception):
-    pass
+    """
+    自定义错误：文件残缺
+    """
+    def __init__(self,ErrorInfo):
+        super().__init__(self)
+        self.errorinfo=ErrorInfo
+    def __str__(self):
+        return self.errorinfo
 
 class Trial:
     def __init__(self):
@@ -64,7 +71,8 @@ class Trial:
             justify=CENTER,
         )
         info.pack()
-        time.sleep(0.3)
+        ini.update()
+        time.sleep(0.4)
 
         def status(text, t=0.3, failure=False):
             """
@@ -94,18 +102,20 @@ class Trial:
                 except KeyError:
                     errors.append(i)
             if errors != []:
-                raise LanguageFileNotCompletely(errors)
+                raise LanguageFileNotCompletely("".join(f"{i}\n" for i in errors))
         except FileNotFoundError:
             status(
-                f"\n启动……\n获取语言文件失败，3秒后退出",
+                f"\n获取语言文件失败\n3秒后退出",
                 t=3,
                 failure=True,
             )
             ini.destroy()
             exit()
-        except LanguageFileNotCompletely: # 文件缺少必要项
+        except LanguageFileNotCompletely as e: # 文件缺少必要项
+            with open("ERROR.txt", "w", encoding="UTF-8") as f:
+                f.write(str(e))
             status(
-                f"\n启动……\n语言文件缺少必要项目，3秒后退出",
+                f"\n语言文件缺少必要项目，详见ERROR.txt\n3秒后退出",
                 t=3,
                 failure=True,
             )
@@ -136,7 +146,7 @@ class Trial:
                     )
                     CONFIG["NAME"] = eval(f.read())
             except FileNotFoundError:
-                status("\n启动失败\n获取数据失败，3秒后退出", t=3, failure=True)
+                status("\n获取数据失败\n3秒后退出", t=3, failure=True)
                 ini.destroy()
                 exit()
 
