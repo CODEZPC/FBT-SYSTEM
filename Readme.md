@@ -30,7 +30,11 @@ KEY-TEST
 
 ### 本地
 
+<<<<<<< Updated upstream
 在[`set/names.json`](names.json)中配置文件，格式如下
+=======
+在[`set/names.json`](set/names.json)中进行配置，格式如下
+>>>>>>> Stashed changes
 
 ```json
 {
@@ -50,3 +54,4 @@ KEY-TEST
 
 ## 界面文字及语言
 
+此部分尚未完成……
