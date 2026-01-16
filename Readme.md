@@ -6,7 +6,7 @@
 
 ### API
 
-如果要使用CodeAPI上的名单，将[`set/KEY`](KEY)文件配置为名单密钥，即可自动获取名单
+如果要使用CodeAPI上的名单，将[`set/KEY`](set/KEY)文件配置为名单密钥，即可自动获取名单
 
 **与Github的连接可能不稳定，此时会使用本地名单**
 
@@ -30,7 +30,7 @@ KEY-TEST
 
 ### 本地
 
-在[`set/names.json`](names.json)中配置文件，格式如下
+在[`set/names.json`](set/names.json)中配置文件，格式如下
 
 ```json
 {
