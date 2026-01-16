@@ -121,6 +121,14 @@ class Trial:
             )
             ini.destroy()
             exit()
+        except SyntaxError:
+            status(
+                f"\n语言文件格式错误，检查文件格式后重试\n3秒后退出",
+                t=3,
+                failure=True,
+            )
+            ini.destroy()
+            exit()
 
         # 读取API数据
         try:
