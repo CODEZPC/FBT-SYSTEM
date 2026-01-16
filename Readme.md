@@ -50,4 +50,10 @@ KEY-TEST
 
 ## 界面文字及语言
 
-此部分尚未完成……
+在[`set/lang.json`](set/lang.json)中进行配置，格式如下
+
+```json
+{
+    "LB.title": "标题"
+}
+```
