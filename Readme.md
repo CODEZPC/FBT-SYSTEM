@@ -32,6 +32,8 @@ KEY-TEST
 
 在[`set/names.json`](set/names.json)中进行配置，格式如下
 
+* 如果只使用本地名单，删除[`set/KEY`](set/KEY)文件
+
 ```json
 {
     "名单1": [
