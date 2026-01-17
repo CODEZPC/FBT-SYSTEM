@@ -84,7 +84,7 @@ class Trial:
         initialize_window.update()
         time.sleep(0.4)
 
-        def status(text, time=0.3, failure=False):
+        def status(text, t=0.3, failure=False):
             """
             启动时的信息显示
 
