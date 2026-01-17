@@ -352,7 +352,7 @@ class Trial:
         self.rempty.grid(row=1000, column=1000)
         self.title = Label(
             tk,
-            text=f"{LANG["LB.title"]}",
+            text=LANG["LB.title"],
             font=("汉仪文黑-85W", 40),
             fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
             bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
@@ -361,7 +361,7 @@ class Trial:
         self.title.grid(row=1, column=1, columnspan=9)
         self.start = Label(
             tk,
-            text="选择人数以开始",
+            text=LANG["LB.choice.none"],
             font=("汉仪文黑-85W", 20),
             fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
             bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
