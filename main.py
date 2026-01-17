@@ -64,16 +64,16 @@ class LanguageFileNotCompletely(Exception):
 class Trial:
     def __init__(self):
         global LANG
-        ini = Tk()  # 初始化窗口
-        ini.overrideredirect(True)  # 去除窗口修饰
-        ini.geometry(
+        initialize_window = Tk()  # 初始化窗口
+        initialize_window.overrideredirect(True)  # 去除窗口修饰
+        initialize_window.geometry(
             f"400x105+{int((CONFIG["INFO_SCREEN_WIDTH"] - 400) / 2)}+{int((CONFIG["INFO_SCREEN_HEIGHT"] - 105) / 2)}"
         )  # 居中
-        ini.resizable(False, False)  # 禁用缩放
-        ini.title("启动")
-        ini.configure(bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]])
+        initialize_window.resizable(False, False)  # 禁用缩放
+        initialize_window.title("启动")
+        initialize_window.configure(bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]])
         info = Label(
-            ini,
+            initialize_window,
             text="\n启动……\n准备……",
             font=("汉仪文黑-85W", 15),
             fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
@@ -81,10 +81,10 @@ class Trial:
             justify=CENTER,
         )
         info.pack()
-        ini.update()
+        initialize_window.update()
         time.sleep(0.4)
 
-        def status(text, t=0.3, failure=False):
+        def status(text, time=0.3, failure=False):
             """
             启动时的信息显示
 
@@ -96,8 +96,8 @@ class Trial:
                 text=text,
                 fg="#AE7A7A" if failure else CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
             )
-            ini.update()
-            time.sleep(t)
+            initialize_window.update()
+            time.sleep(time)
 
         # 读取语言文件
         try:
@@ -116,28 +116,28 @@ class Trial:
         except FileNotFoundError:
             status(
                 f"\n获取语言文件失败\n3秒后退出",
-                t=3,
+                time=3,
                 failure=True,
             )
-            ini.destroy()
+            initialize_window.destroy()
             exit()
         except LanguageFileNotCompletely as e:  # 文件缺少必要项
             with open("ERROR.txt", "w", encoding="UTF-8") as f:
                 f.write(str(e))
             status(
                 f"\n语言文件缺少必要项目，详见ERROR.txt\n3秒后退出",
-                t=3,
+                time=3,
                 failure=True,
             )
-            ini.destroy()
+            initialize_window.destroy()
             exit()
         except SyntaxError:
             status(
                 f"\n语言文件格式错误，检查文件格式后重试\n3秒后退出",
-                t=3,
+                time=3,
                 failure=True,
             )
-            ini.destroy()
+            initialize_window.destroy()
             exit()
 
         # 读取API数据
@@ -147,7 +147,7 @@ class Trial:
                 self.KEY = f.read()
         except FileNotFoundError:
             status(
-                f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY失败", t=1, failure=True
+                f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY失败", time=1, failure=True
             )
             CONFIG["NAME"] = None
         else:
@@ -164,8 +164,8 @@ class Trial:
                     )
                     CONFIG["NAME"] = eval(f.read())
             except FileNotFoundError:
-                status("\n获取数据失败\n3秒后退出", t=3, failure=True)
-                ini.destroy()
+                status("\n获取数据失败\n3秒后退出", time=3, failure=True)
+                initialize_window.destroy()
                 exit()
 
         # 解析名单文件
@@ -173,32 +173,32 @@ class Trial:
         CONFIG["LIST"] = CONFIG["NAME"].keys()
         status(f"\n{LANG["LB.title"]}正在启动……\n应用抽取池……")
         CONFIG["TABLE"] = CONFIG["NAME"][list(CONFIG["LIST"])[0]]
-        status("\n完成", t=1)
-        ini.destroy()
+        status("\n完成", time=1)
+        initialize_window.destroy()
 
         self.load_ui()
 
-    def choice(self, pl):
+    def choice(self, amount):
         choices = []
-        if pl > len(CONFIG["TABLE"]):
-            for i in range(pl):
+        if amount > len(CONFIG["TABLE"]):
+            for i in range(amount):
                 choices.append("Error")
             return choices
-        li = [i for i in range(1, len(CONFIG["TABLE"]) + 1)]
-        for i in range(pl):
-            t = random.randint(0, len(li) - 1)
-            choices.append(CONFIG["TABLE"][li[t] - 1])
-            del li[t]
+        pool = [i for i in range(1, len(CONFIG["TABLE"]) + 1)]
+        for i in range(amount):
+            get = random.randint(0, len(pool) - 1)
+            choices.append(CONFIG["TABLE"][pool[get] - 1])
+            del pool[get]
         return choices
 
-    def drawt(self, pl):
-        thread = threading.Thread(target=self.draw, args=(pl,))
+    def draw_thread(self, amount):
+        thread = threading.Thread(target=self.draw, args=(amount,))
         thread.start()
 
-    def draw(self, pl):
+    def draw(self, amount):
         def dw():
             self.name.grid_forget()
-            names = self.choice(pl)
+            names = self.choice(amount)
             name_text = ""
             for i in range(len(names)):
                 if i in [3, 6]:
@@ -356,7 +356,7 @@ class Trial:
                     font=("汉仪文黑-85W", 20),
                     fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
                     bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-                    command=lambda i=i: self.drawt(i),
+                    command=lambda i=i: self.draw_thread(i),
                     width=3,
                 )
             )
@@ -366,8 +366,8 @@ class Trial:
         
         # === 下拉菜单 === #
 
-        combo_style = Style()
-        combo_style.theme_create(
+        self.combo_style = Style()
+        self.combo_style.theme_create(
             "combostyle",
             parent="alt",
             settings={
@@ -381,17 +381,17 @@ class Trial:
                 }
             },
         )
-        combo_style.theme_use("combostyle")
+        self.combo_style.theme_use("combostyle")
 
-        pool_select = Combobox(tk, values=list(CONFIG["LIST"]), state="readonly")
+        self.pool_select = Combobox(tk, values=list(CONFIG["LIST"]), state="readonly")
 
         def option_selected(event):
-            CONFIG["TABLE"] = CONFIG["NAME"][pool_select.get()]
+            CONFIG["TABLE"] = CONFIG["NAME"][self.pool_select.get()]
 
-        pool_select.bind("<<ComboboxSelected>>", option_selected)
-        pool_select.grid(row=5, column=1, columnspan=9)
-        pool_select.bind("<Enter>", lambda event: self.function(event, "pool"))
-        pool_select.bind("<Leave>", lambda event: self.function(event, 0))
+        self.pool_select.bind("<<ComboboxSelected>>", option_selected)
+        self.pool_select.grid(row=5, column=1, columnspan=9)
+        self.pool_select.bind("<Enter>", lambda event: self.function(event, "pool"))
+        self.pool_select.bind("<Leave>", lambda event: self.function(event, 0))
 
         # === 工具栏 === #
         
