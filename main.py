@@ -57,12 +57,25 @@ def codeapi(File, Repositories="CodeAPI"):
         return response.text
     except requests.exceptions.RequestException as e:
         print(f"Error fetching file: {e}")
-        return "None"
+        return "{\"$Status\": \"Fail\"}"
 
 
 class LanguageFileNotCompletely(Exception):
     """
     自定义错误：文件残缺
+    """
+
+    def __init__(self, ErrorInfo):
+        super().__init__(self)
+        self.errorinfo = ErrorInfo
+
+    def __str__(self):
+        return self.errorinfo
+
+
+class ApiDisabled(Exception):
+    """
+    自定义错误：Api禁用
     """
 
     def __init__(self, ErrorInfo):
@@ -157,23 +170,33 @@ class Trial:
             with open("set/KEY", "r") as f:
                 status(f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY……")
                 self.KEY = f.read()
+            if self.KEY == "NONE":
+                raise ApiDisabled(True)
         except FileNotFoundError:
             status(
                 f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY失败", t=1, failure=True
             )
-            CONFIG["NAME"] = None
+            CONFIG["NAME"] = {"$Status": "Fail"}
+        except ApiDisabled:
+            status(f"\n{LANG["LB.title"]}正在启动……\nAPI已禁用")
+            CONFIG["NAME"] = {"$Status": "Disable"}
         else:
             status(f"\n{LANG["LB.title"]}正在启动……\n获取API数据……")
             CONFIG["NAME"] = eval(codeapi(f"LB/{self.KEY}/names.json", "CodeAPI"))
 
         # 处理本地名单
-        if not CONFIG["NAME"]:
+        if "$Status" in list(CONFIG["NAME"].keys()):
+            if CONFIG["NAME"]["$Status"] == "Fail":
+                status(
+                    f"\n{LANG["LB.title"]}正在启动……\n获取API数据失败，获取本地数据……",
+                    failure=True,
+                )
+            else:
+                status(
+                    f"\n{LANG["LB.title"]}正在启动……\n获取本地数据……",
+                )
             try:
                 with open("./set/names.json", "r", encoding="utf-8") as f:
-                    status(
-                        f"\n{LANG["LB.title"]}正在启动……\n获取API数据失败，获取本地数据……",
-                        failure=True,
-                    )
                     CONFIG["NAME"] = eval(f.read())
             except FileNotFoundError:
                 status("\n获取数据失败\n3秒后退出", t=3, failure=True)
