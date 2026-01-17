@@ -116,7 +116,7 @@ class Trial:
         except FileNotFoundError:
             status(
                 f"\n获取语言文件失败\n3秒后退出",
-                time=3,
+                t=3,
                 failure=True,
             )
             initialize_window.destroy()
@@ -126,7 +126,7 @@ class Trial:
                 f.write(str(e))
             status(
                 f"\n语言文件缺少必要项目，详见ERROR.txt\n3秒后退出",
-                time=3,
+                t=3,
                 failure=True,
             )
             initialize_window.destroy()
@@ -134,7 +134,7 @@ class Trial:
         except SyntaxError:
             status(
                 f"\n语言文件格式错误，检查文件格式后重试\n3秒后退出",
-                time=3,
+                t=3,
                 failure=True,
             )
             initialize_window.destroy()
@@ -147,7 +147,7 @@ class Trial:
                 self.KEY = f.read()
         except FileNotFoundError:
             status(
-                f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY失败", time=1, failure=True
+                f"\n{LANG["LB.title"]}正在启动……\n获取API-KEY失败", t=1, failure=True
             )
             CONFIG["NAME"] = None
         else:
@@ -164,7 +164,7 @@ class Trial:
                     )
                     CONFIG["NAME"] = eval(f.read())
             except FileNotFoundError:
-                status("\n获取数据失败\n3秒后退出", time=3, failure=True)
+                status("\n获取数据失败\n3秒后退出", t=3, failure=True)
                 initialize_window.destroy()
                 exit()
 
@@ -173,7 +173,7 @@ class Trial:
         CONFIG["LIST"] = CONFIG["NAME"].keys()
         status(f"\n{LANG["LB.title"]}正在启动……\n应用抽取池……")
         CONFIG["TABLE"] = CONFIG["NAME"][list(CONFIG["LIST"])[0]]
-        status("\n完成", time=1)
+        status("\n完成", t=1)
         initialize_window.destroy()
 
         self.load_ui()
