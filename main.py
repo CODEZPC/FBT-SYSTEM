@@ -41,15 +41,19 @@ def codeapi(File, Repositories="CodeAPI"):
         print(f"Error fetching file: {e}")
         return "None"
 
+
 class LanguageFileNotCompletely(Exception):
     """
     自定义错误：文件残缺
     """
-    def __init__(self,ErrorInfo):
+
+    def __init__(self, ErrorInfo):
         super().__init__(self)
-        self.errorinfo=ErrorInfo
+        self.errorinfo = ErrorInfo
+
     def __str__(self):
         return self.errorinfo
+
 
 class Trial:
     def __init__(self):
@@ -111,7 +115,7 @@ class Trial:
             )
             ini.destroy()
             exit()
-        except LanguageFileNotCompletely as e: # 文件缺少必要项
+        except LanguageFileNotCompletely as e:  # 文件缺少必要项
             with open("ERROR.txt", "w", encoding="UTF-8") as f:
                 f.write(str(e))
             status(
@@ -337,114 +341,20 @@ class Trial:
             justify=CENTER,
         )
         self.start.grid(row=2, column=1, columnspan=9)
-        self.startbutton1 = Button(
-            tk,
-            text="1",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(1),
-            width=3,
-        )
-        self.startbutton2 = Button(
-            tk,
-            text="2",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(2),
-            width=3,
-        )
-        self.startbutton3 = Button(
-            tk,
-            text="3",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(3),
-            width=3,
-        )
-        self.startbutton4 = Button(
-            tk,
-            text="4",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(4),
-            width=3,
-        )
-        self.startbutton5 = Button(
-            tk,
-            text="5",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(5),
-            width=3,
-        )
-        self.startbutton6 = Button(
-            tk,
-            text="6",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(6),
-            width=3,
-        )
-        self.startbutton7 = Button(
-            tk,
-            text="7",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(7),
-            width=3,
-        )
-        self.startbutton8 = Button(
-            tk,
-            text="8",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(8),
-            width=3,
-        )
-        self.startbutton9 = Button(
-            tk,
-            text="9",
-            font=("汉仪文黑-85W", 20),
-            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-            command=lambda: self.drawt(9),
-            width=3,
-        )
-        self.startbutton1.grid(row=3, column=1)
-        self.startbutton2.grid(row=3, column=2)
-        self.startbutton3.grid(row=3, column=3)
-        self.startbutton4.grid(row=3, column=4)
-        self.startbutton5.grid(row=3, column=5)
-        self.startbutton6.grid(row=3, column=6)
-        self.startbutton7.grid(row=3, column=7)
-        self.startbutton8.grid(row=3, column=8)
-        self.startbutton9.grid(row=3, column=9)
-        self.startbutton1.bind("<Enter>", lambda event: self.function(event, 1))
-        self.startbutton2.bind("<Enter>", lambda event: self.function(event, 2))
-        self.startbutton3.bind("<Enter>", lambda event: self.function(event, 3))
-        self.startbutton4.bind("<Enter>", lambda event: self.function(event, 4))
-        self.startbutton5.bind("<Enter>", lambda event: self.function(event, 5))
-        self.startbutton6.bind("<Enter>", lambda event: self.function(event, 6))
-        self.startbutton7.bind("<Enter>", lambda event: self.function(event, 7))
-        self.startbutton8.bind("<Enter>", lambda event: self.function(event, 8))
-        self.startbutton9.bind("<Enter>", lambda event: self.function(event, 9))
-        self.startbutton1.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton2.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton3.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton4.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton5.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton6.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton7.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton8.bind("<Leave>", lambda event: self.function(event, 0))
-        self.startbutton9.bind("<Leave>", lambda event: self.function(event, 0))
+        self.startbutton = []
+        for i in range(1, 10):
+            self.startbutton[i] = Button(
+                tk,
+                text=f"{i}",
+                font=("汉仪文黑-85W", 20),
+                fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
+                bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
+                command=lambda: self.drawt(i),
+                width=3,
+            )
+            self.startbutton[i].grid(row=3, column=i)
+            self.startbutton[i].bind("<Enter>", lambda event: self.function(event, i))
+            self.startbutton[i].bind("<Leave>", lambda event: self.function(event, 0))
 
         combo_style = Style()
         combo_style.theme_create(
