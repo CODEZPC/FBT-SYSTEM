@@ -357,6 +357,8 @@ class Trial:
             self.startbutton[i-1].grid(row=3, column=i)
             self.startbutton[i-1].bind("<Enter>", lambda event: self.function(event, i))
             self.startbutton[i-1].bind("<Leave>", lambda event, i=i: self.function(event, 0))
+        
+        # === 下拉菜单 === #
 
         combo_style = Style()
         combo_style.theme_create(
@@ -381,21 +383,12 @@ class Trial:
             CONFIG["TABLE"] = CONFIG["NAME"][pool_select.get()]
 
         pool_select.bind("<<ComboboxSelected>>", option_selected)
-        pool_select.grid(row=4, column=1, columnspan=9)
+        pool_select.grid(row=5, column=1, columnspan=9)
         pool_select.bind("<Enter>", lambda event: self.function(event, "pool"))
         pool_select.bind("<Leave>", lambda event: self.function(event, 0))
 
-        # self.stat = Button(
-        #     tk,
-        #     text="统计",
-        #     font=("汉仪文黑-85W", 20),
-        #     fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-        #     bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-        #     command=self.stat_mode,
-        #     width=23,
-        # )
-        # self.stat.grid(row=6, column=1, columnspan=9)
-
+        # === 工具栏 === #
+        
         self.set = Button(
             tk,
             text="设置",
@@ -403,9 +396,9 @@ class Trial:
             fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
             bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
             command=self.setting,
-            width=5,
+            width=8,
         )
-        self.set.grid(row=5, column=1, columnspan=9)
+        self.set.grid(row=4, column=1, columnspan=9)
         self.set.bind("<Enter>", lambda event: self.function(event, "set"))
         self.set.bind("<Leave>", lambda event: self.function(event, 0))
 
