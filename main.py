@@ -343,18 +343,20 @@ class Trial:
         self.start.grid(row=2, column=1, columnspan=9)
         self.startbutton = []
         for i in range(1, 10):
-            self.startbutton[i] = Button(
-                tk,
-                text=f"{i}",
-                font=("汉仪文黑-85W", 20),
-                fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
-                bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
-                command=lambda: self.drawt(i),
-                width=3,
+            self.startbutton.append(
+                Button(
+                    tk,
+                    text=f"{i}",
+                    font=("汉仪文黑-85W", 20),
+                    fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
+                    bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
+                    command=lambda i=i: self.drawt(i),
+                    width=3,
+                )
             )
-            self.startbutton[i].grid(row=3, column=i)
-            self.startbutton[i].bind("<Enter>", lambda event: self.function(event, i))
-            self.startbutton[i].bind("<Leave>", lambda event: self.function(event, 0))
+            self.startbutton[i-1].grid(row=3, column=i)
+            self.startbutton[i-1].bind("<Enter>", lambda event: self.function(event, i))
+            self.startbutton[i-1].bind("<Leave>", lambda event, i=i: self.function(event, 0))
 
         combo_style = Style()
         combo_style.theme_create(
