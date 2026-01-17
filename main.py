@@ -97,7 +97,7 @@ class Trial:
                 fg="#AE7A7A" if failure else CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
             )
             initialize_window.update()
-            time.sleep(time)
+            time.sleep(t)
 
         # 读取语言文件
         try:
