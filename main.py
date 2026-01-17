@@ -31,6 +31,12 @@ tk.destroy()
 
 
 def codeapi(File, Repositories="CodeAPI"):
+    """
+    获取CodeAPI
+    
+    :param File: API上的文件路径
+    :param Repositories: API存储库
+    """
     site = f"http://codezpc.github.io/{Repositories}/{File}"
     try:
         # 发送HTTP GET请求
