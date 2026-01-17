@@ -287,21 +287,7 @@ class Trial:
         # TODO settings
 
     def function(self, event, arg):
-        show = {
-            0: "选择人数以开始",
-            1: "抽取1人",
-            2: "抽取2人",
-            3: "抽取3人",
-            4: "抽取4人",
-            5: "抽取5人",
-            6: "抽取6人",
-            7: "抽取7人",
-            8: "抽取8人",
-            9: "抽取9人",
-            "pool": "抽取池……？",
-            "set": "设置……？",
-        }
-        self.start.configure(text=show[arg])
+        self.start.configure(text=LANG[arg])
 
     def load_ui(self):
         tk = Tk()
@@ -361,8 +347,8 @@ class Trial:
                 )
             )
             self.startbutton[i-1].grid(row=3, column=i)
-            self.startbutton[i-1].bind("<Enter>", lambda event: self.function(event, i))
-            self.startbutton[i-1].bind("<Leave>", lambda event, i=i: self.function(event, 0))
+            self.startbutton[i-1].bind("<Enter>", lambda event, i=i: self.function(event, f"LB.choice.{i}"))
+            self.startbutton[i-1].bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
         
         # === 下拉菜单 === #
 
@@ -390,8 +376,8 @@ class Trial:
 
         self.pool_select.bind("<<ComboboxSelected>>", option_selected)
         self.pool_select.grid(row=5, column=1, columnspan=9)
-        self.pool_select.bind("<Enter>", lambda event: self.function(event, "pool"))
-        self.pool_select.bind("<Leave>", lambda event: self.function(event, 0))
+        self.pool_select.bind("<Enter>", lambda event: self.function(event, "LB.pool"))
+        self.pool_select.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
 
         # === 工具栏 === #
         
@@ -405,8 +391,8 @@ class Trial:
             width=8,
         )
         self.set.grid(row=4, column=1, columnspan=9)
-        self.set.bind("<Enter>", lambda event: self.function(event, "set"))
-        self.set.bind("<Leave>", lambda event: self.function(event, 0))
+        self.set.bind("<Enter>", lambda event: self.function(event, "LB.set"))
+        self.set.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
 
 
 if __name__ == "__main__":

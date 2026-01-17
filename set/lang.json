@@ -1,3 +1,15 @@
 {
-    "LB.title": "联邦审判"
+    "LB.title": "联邦审判",
+    "LB.choice.none": "选择人数以开始",
+    "LB.choice.1": "抽取1人",
+    "LB.choice.2": "抽取2人",
+    "LB.choice.3": "抽取3人",
+    "LB.choice.4": "抽取4人",
+    "LB.choice.5": "抽取5人",
+    "LB.choice.6": "抽取6人",
+    "LB.choice.7": "抽取7人",
+    "LB.choice.8": "抽取8人",
+    "LB.choice.9": "抽取9人",
+    "LB.pool": "抽取池……？",
+    "LB.set": "设置……？"
 }
