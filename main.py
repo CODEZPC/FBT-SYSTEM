@@ -38,7 +38,7 @@ LANGKEY = [
     "LB.pool",  # 抽取池
     "LB.set",  # 设置
 ]  # 需要的语言键值对
-INFO = {"VERSION": "2.3.3"}
+INFO = {"VERSION": "2.3.4"}
 tk.destroy()
 
 
