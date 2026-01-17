@@ -25,6 +25,18 @@ CONFIG = {
 LANG = {}  # 语言文件（读入）
 LANGKEY = [
     "LB.title",  # 程序标题
+    "LB.choice.none",  # 空
+    "LB.choice.1",  # 抽取1-9人
+    "LB.choice.2",
+    "LB.choice.3",
+    "LB.choice.4",
+    "LB.choice.5",
+    "LB.choice.6",
+    "LB.choice.7",
+    "LB.choice.8",
+    "LB.choice.9",
+    "LB.pool",  # 抽取池
+    "LB.set",  # 设置
 ]  # 需要的语言键值对
 INFO = {"VERSION": "2.3.3"}
 tk.destroy()
@@ -33,7 +45,7 @@ tk.destroy()
 def codeapi(File, Repositories="CodeAPI"):
     """
     获取CodeAPI
-    
+
     :param File: API上的文件路径
     :param Repositories: API存储库
     """
@@ -346,10 +358,14 @@ class Trial:
                     width=3,
                 )
             )
-            self.startbutton[i-1].grid(row=3, column=i)
-            self.startbutton[i-1].bind("<Enter>", lambda event, i=i: self.function(event, f"LB.choice.{i}"))
-            self.startbutton[i-1].bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
-        
+            self.startbutton[i - 1].grid(row=3, column=i)
+            self.startbutton[i - 1].bind(
+                "<Enter>", lambda event, i=i: self.function(event, f"LB.choice.{i}")
+            )
+            self.startbutton[i - 1].bind(
+                "<Leave>", lambda event: self.function(event, "LB.choice.none")
+            )
+
         # === 下拉菜单 === #
 
         self.combo_style = Style()
@@ -377,10 +393,12 @@ class Trial:
         self.pool_select.bind("<<ComboboxSelected>>", option_selected)
         self.pool_select.grid(row=5, column=1, columnspan=9)
         self.pool_select.bind("<Enter>", lambda event: self.function(event, "LB.pool"))
-        self.pool_select.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
+        self.pool_select.bind(
+            "<Leave>", lambda event: self.function(event, "LB.choice.none")
+        )
 
         # === 工具栏 === #
-        
+
         self.set = Button(
             tk,
             text="设置",
