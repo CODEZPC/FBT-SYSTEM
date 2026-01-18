@@ -37,6 +37,7 @@ LANGKEY = [
     "LB.choice.9",
     "LB.pool",  # 抽取池
     "LB.set",  # 设置
+    "LB.issue",  # 反馈
 ]  # 需要的语言键值对
 INFO = {"VERSION": "2.3.4"}
 tk.destroy()
@@ -57,7 +58,7 @@ def codeapi(File, Repositories="CodeAPI"):
         return response.text
     except requests.exceptions.RequestException as e:
         print(f"Error fetching file: {e}")
-        return "{\"$Status\": \"Fail\"}"
+        return '{"$Status": "Fail"}'
 
 
 class LanguageFileNotCompletely(Exception):
@@ -431,9 +432,25 @@ class Trial:
             command=self.setting,
             width=8,
         )
-        self.set.grid(row=4, column=1, columnspan=9)
+        self.set.grid(row=4, column=6)
         self.set.bind("<Enter>", lambda event: self.function(event, "LB.set"))
         self.set.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
+
+        def open_issue():
+            os.system("start https://github.com/CODEZPC/FBT-SYSTEM/issues")
+
+        self.issue = Button(
+            tk,
+            text="反馈",
+            font=("汉仪文黑-85W", 8),
+            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
+            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
+            command=open_issue,
+            width=8,
+        )
+        self.issue.grid(row=4, column=4)
+        self.issue.bind("<Enter>", lambda event: self.function(event, "LB.issue"))
+        self.issue.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
 
 
 if __name__ == "__main__":
