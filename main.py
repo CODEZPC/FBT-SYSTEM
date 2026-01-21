@@ -110,7 +110,7 @@ class Trial:
         initialize_window.update()
         time.sleep(0.4)
 
-        def status(text, t=0.3, failure=False):
+        def status(text, t=0.2, failure=False):
             """
             启动时的信息显示
 
@@ -128,11 +128,13 @@ class Trial:
         # 读取语言文件
         try:
             with open("set/lang.json", "r", encoding="UTF-8") as f:
+                status("\n启动……\n读取语言文件……")
                 LANG = eval(f.read())
 
             # 检测文件完整性
             errors = []
             for i in LANGKEY:
+                status(f"\n启动……\n处理语言文件({LANGKEY.index(i)}/{len(LANGKEY)})……", t=0.05)
                 try:
                     LANG[i]  # 尝试读取一次
                 except KeyError:
