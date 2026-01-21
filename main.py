@@ -433,6 +433,7 @@ class Trial:
             bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
             command=self.setting,
             width=8,
+            state=DISABLED,  # 在功能完成前禁止
         )
         self.set.grid(row=4, column=6)
         self.set.bind("<Enter>", lambda event: self.function(event, "LB.set"))
