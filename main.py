@@ -415,7 +415,9 @@ class Trial:
         )
         self.combo_style.theme_use("combostyle")
 
-        self.pool_select = Combobox(tk, values=list(CONFIG["LIST"]), state="readonly")
+        self.pool_select = Combobox(
+            tk, values=list(CONFIG["LIST"]), state="readonly", width=26
+        )
 
         def option_selected(event):
             CONFIG["TABLE"] = CONFIG["NAME"][self.pool_select.get()]
