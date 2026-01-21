@@ -40,7 +40,7 @@ LANGKEY = [
     "LB.update",  # 检查更新
     "LB.issue",  # 反馈
 ]  # 需要的语言键值对
-INFO = {"VERSION": "2.3.4"}
+INFO = {"VERSION": "2.3.5"}
 tk.destroy()
 
 
