@@ -13,11 +13,15 @@ def download_file():
     url = 'http://codezpc.github.io/CodeAPI/LB/test.exe'
     file_path = os.path.join(download_dir, 'test.exe')
     
+    def progress_callback(count, block_size, total_size):
+        percent = int(count * block_size * 100 / total_size)
+        print(f"\r下载进度: {percent}%", end="", flush=True)
+
     try:
         # 下载文件
         print(f"正在从 {url} 下载文件...")
-        urllib.request.urlretrieve(url, file_path)
-        print(f"文件已成功下载到：{file_path}")
+        urllib.request.urlretrieve(url, file_path, reporthook=progress_callback)
+        print(f"\n文件已成功下载到：{file_path}")
         return True
     except Exception as e:
         print(f"下载失败: {str(e)}")
