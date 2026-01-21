@@ -37,6 +37,7 @@ LANGKEY = [
     "LB.choice.9",
     "LB.pool",  # 抽取池
     "LB.set",  # 设置
+    "LB.update",  # 检查更新
     "LB.issue",  # 反馈
 ]  # 需要的语言键值对
 INFO = {"VERSION": "2.3.4"}
@@ -134,7 +135,10 @@ class Trial:
             # 检测文件完整性
             errors = []
             for i in LANGKEY:
-                status(f"\n启动……\n处理语言文件({LANGKEY.index(i)}/{len(LANGKEY)})……", t=0.05)
+                status(
+                    f"\n启动……\n处理语言文件({LANGKEY.index(i)}/{len(LANGKEY)})……",
+                    t=0.05,
+                )
                 try:
                     LANG[i]  # 尝试读取一次
                 except KeyError:
@@ -454,6 +458,22 @@ class Trial:
         self.issue.grid(row=4, column=4)
         self.issue.bind("<Enter>", lambda event: self.function(event, "LB.issue"))
         self.issue.bind("<Leave>", lambda event: self.function(event, "LB.choice.none"))
+
+        self.update = Button(
+            tk,
+            text="检查更新",
+            font=("汉仪文黑-85W", 8),
+            fg=CONFIG["COLOR_TITLE"][CONFIG["THEME"]],
+            bg=CONFIG["COLOR_BACKGROUND"][CONFIG["THEME"]],
+            # command=,
+            width=8,
+            state=DISABLED,  # 在功能完成前禁止
+        )
+        self.update.grid(row=4, column=5)
+        self.update.bind("<Enter>", lambda event: self.function(event, "LB.update"))
+        self.update.bind(
+            "<Leave>", lambda event: self.function(event, "LB.choice.none")
+        )
 
 
 if __name__ == "__main__":
