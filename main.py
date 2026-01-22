@@ -93,6 +93,7 @@ class Trial:
         global LANG
         initialize_window = Tk()  # 初始化窗口
         initialize_window.overrideredirect(True)  # 去除窗口修饰
+        initialize_window.attributes("-topmost", True)
         initialize_window.geometry(
             f"400x105+{int((CONFIG["INFO_SCREEN_WIDTH"] - 400) / 2)}+{int((CONFIG["INFO_SCREEN_HEIGHT"] - 105) / 2)}"
         )  # 居中
